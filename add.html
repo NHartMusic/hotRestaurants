@@ -65,7 +65,7 @@
     // Question: What does this code do?
     $("#add-btn").on("click", function(event) {
       event.preventDefault();
-      var newCharacter = {
+      var newTable = {
         name: $("#name").val().trim(),
         phone: $("#phoneN").val().trim(),
         email: $("#email").val().trim(),
@@ -73,10 +73,10 @@
       };
 
       // Question: What does this code do??
-      $.post("/api/tables")
+      $.post("/api/tables", newTable)
       .done(function(data) {
         console.log(data);
-        alert("Adding character...");
+        alert("Adding table...");
       });
     });
   </script>

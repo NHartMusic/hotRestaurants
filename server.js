@@ -60,6 +60,19 @@ app.get("/api/tables", function(req, res) {
 });
 
 
+// Create New Characters - takes in JSON input
+app.post("/api/tables", function(req, res) {
+	console.log(req.body);
+  var newTable = req.body;
+  // newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();
+
+
+  tables.push(newTable);
+
+  res.json(newTable);
+});
+
+
 
 
 app.listen(PORT, function() {

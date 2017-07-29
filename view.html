@@ -8,7 +8,7 @@
 	<!-- Latest compiled and minified CSS & JS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" </script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"> </script>
 
 </head>
 <body>
@@ -51,12 +51,12 @@
 		</div>
 
 
-	    <footer class="footer">
-	      <div class="container">
-	      	<p>Control Panel</p>
-	        <p><a href="#" id="clear">Clear Table</a> | <a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API Wait List</a></p>
-	      </div>
-	    </footer>
+		<footer class="footer">
+			<div class="container">
+				<p>Control Panel</p>
+				<p><a href="#" id="clear">Clear Table</a> | <a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API Wait List</a></p>
+			</div>
+		</footer>
 
 	</div>
 
@@ -65,76 +65,117 @@
 
 <!-- BELOW CODE IS CRITICAL. IT HANDLES HOW FORM DATA IS LOADED FROM OUR SERVER -->
 <script type="text/javascript">
-
+var index = 1;
 	function runTableQuery(){
-	
-		var currentURL = window.location.origin;
-
-	   $.get(currentURL + "/api/tables", displayAll,
-		    function(tableData){
-
-				// Here we are logging the URL so we have access to it for troubleshooting
-				console.log("------------------------------------");
-				console.log("URL: " + currentURL + "/api/tables");
-				console.log("------------------------------------");
-				
-				console.log(tableData);
-				console.log("------------------------------------")
-				// Loop through and display each of the customers
-				for (var i=0; i<tableData.length; i++){
-					// Create the HTML Well (Section) and Add the table content for each reserved table
+		$.get("/api/tables", function(data){
+			console.log(data);
+			if(data){
+				data.forEach(function(element){
+					console.log(element);
 					var tableSection = $("<div>");
 					tableSection.addClass('well');
-					tableSection.attr('id', 'tableWell-' + i+1)
-					$('#tableSection').append(tableSection);
-					var tableNumber = i + 1;
-					// Then display the remaining fields in the HTML (Section Name, Date, URL)
-					$("#tableWell-"+ i+1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + tableData[i].uniqueId + "</h2>");
-				}
-			});
+					tableSection.text(index + ' ' + element.name);
+					$("#tableSection").append(tableSection);
+					index++;
+				});
+			}
+		});
 	}
-	function runWaitListQuery(){
-	
-		var currentURL = window.location.origin;
-	
-		$.get("/api/waitlist", currentURL)
-			.done(function(waitlistData) {
+		// var currentURL = window.location.origin;
+
+	 //   $.get(currentURL + "/api/tables", displayAll,
+		//     function(tableData){
+
+		// 		// Here we are logging the URL so we have access to it for troubleshooting
+		// 		console.log("------------------------------------");
+		// 		console.log("URL: " + currentURL + "/api/tables");
+		// 		console.log("------------------------------------");
+
+		// 		console.log(tableData);
+		// 		console.log("------------------------------------")
+		// 		// Loop through and display each of the customers
+		// 		for (var i=0; i<tableData.length; i++){
+		// 			// Create the HTML Well (Section) and Add the table content for each reserved table
+		// 			var tableSection = $("<div>");
+		// 			tableSection.addClass('well');
+		// 			tableSection.attr('id', 'tableWell-' + i+1)
+		// 			$('#tableSection').append(tableSection);
+		// 			var tableNumber = i + 1;
+		// 			// Then display the remaining fields in the HTML (Section Name, Date, URL)
+		// 			$("#tableWell-"+ i+1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + tableData[i].uniqueId + "</h2>");
+		// 		}
+		// 	});
+// =======
+
+		// })
+		// // Here we get the location of the root page.
+		// // We use this instead of explicitly saying the URL is localhost:3001 because the url will change when we deploy.
+		// var currentURL = window.location.origin;
+		// // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
+		// $.ajax({url: currentURL + "/api/tables", method: "GET"})
+		// 	.done(function(tableData) {
+		// 		// Here we are logging the URL so we have access to it for troubleshooting
+		// 		console.log("------------------------------------");
+		// 		console.log("URL: " + currentURL + "/api/tables");
+		// 		console.log("------------------------------------");
+		// 		// Here we then log the NYTData to console, where it will show up as an object.
+		// 		console.log(tableData);
+		// 		console.log("------------------------------------")
+		// 		// Loop through and display each of the customers
+		// 		for (var i=0; i<tableData.length; i++){
+		// 			// Create the HTML Well (Section) and Add the table content for each reserved table
+		// 			var tableSection = $("<div>");
+		// 			tableSection.addClass('well');
+		// 			tableSection.attr('id', 'tableWell-' + i+1)
+		// 			$('#tableSection').append(tableSection);
+		// 			var tableNumber = i + 1;
+		// 			// Then display the remaining fields in the HTML (Section Name, Date, URL)
+		// 			$("#tableWell-"+ i+1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + tableData[i].customerID + "</h2>");
+		// 		}
+		// 	});
+	// }
+	// function runWaitListQuery(){
+
+	// 	var currentURL = window.location.origin;
+
+	// 	$.get("/api/waitlist", currentURL)
+	// 	.done(function(waitlistData) {
 			
-				console.log("------------------------------------");
-				console.log("URL: " + currentURL + "/api/waitlist");
-				console.log("------------------------------------");
-		
-				console.log(waitlistData);
-				console.log("------------------------------------")
-				for (var i=0; i<waitlistData.length; i++){
-			
-					var waitlistSection = $("<div>");
-					waitlistSection.addClass('well');
-					waitlistSection.attr('id', 'waitlistWell-' + i+1)
-					$('#waitlistSection').append(waitlistSection);
-					var tableNumber = i + 1;
-					// Then display the remaining fields in the HTML (Section Name, Date, URL)
-					$("#waitlistWell-"+ i+1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + waitlistData[i].uniqueId + "</h2>");
-				}
-			});
-	}
+	// 		console.log("------------------------------------");
+	// 		console.log("URL: " + currentURL + "/api/waitlist");
+	// 		console.log("------------------------------------");
 
-	function clearTable(){
-		var currentURL = window.location.origin;
+	// 		console.log(waitlistData);
+	// 		console.log("------------------------------------")
+	// 		for (var i=0; i<waitlistData.length; i++){
 
-		$.post(currentURL + "/api/clear" , clearTable)
-			function(clearTable){
+	// 			var waitlistSection = $("<div>");
+	// 			waitlistSection.addClass('well');
+	// 			waitlistSection.attr('id', 'waitlistWell-' + i+1)
+	// 			$('#waitlistSection').append(waitlistSection);
+	// 			var tableNumber = i + 1;
+	// 				// Then display the remaining fields in the HTML (Section Name, Date, URL)
+	// 				$("#waitlistWell-"+ i+1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + waitlistData[i].uniqueId + "</h2>");
+	// 			}
+	// 		});
+	// }
 
-	}
-	$("#clear").on('click', function(){
-		alert("Clearing...");
-		clearTable();
-		// Refresh the page after data is cleared
-		location.reload();
-	})
-	// Run Queries!
-	// ==========================================
+	// function clearTable(){
+	// 	var currentURL = window.location.origin;
+
+	// 	$.post(currentURL + "/api/clear" , clearTable)
+	// 	function(clearTable){
+
+	// 	}
+	// 	$("#clear").on('click', function(){
+	// 		alert("Clearing...");
+	// 		clearTable();
+	// 	// Refresh the page after data is cleared
+	// 	location.reload();
+	// })
+	// // Run Queries!
+	// // ==========================================
 	runTableQuery();
-	runWaitListQuery();
+	// runWaitListQuery();
 </script>
 </html>

@@ -73,7 +73,7 @@
       };
 
       // Question: What does this code do??
-      $.post("/api/tables", newTable)
+      $.post("/api/reservations", newTable)
       .done(function(data) {
         console.log(data);
         alert("Adding table...");

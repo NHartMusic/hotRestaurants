@@ -60,19 +60,23 @@ app.get("/api/reservations", function(req, res) {
   res.json(reservations);
 });
 
+app.get("/api/waitlist", function(req, res) {
+	res.json(waitList);
+});
+
 
 // Create New Characters - takes in JSON input
 app.post("/api/reservations", function(req, res) {
-	console.log(req.body);
   var newTable = req.body;
   // newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();
 
   if (reservations.length >= 5){
-  	waitList.push(newTable)
+  	waitList.push(newTable);
   } else {
-  	reservations.push(newTable)
+  	reservations.push(newTable);
   };
 
+console.log(waitList);
   res.json(newTable);
 });
 
